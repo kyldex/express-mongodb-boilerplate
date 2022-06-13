@@ -4,7 +4,8 @@ require('dotenv').config();
 
 const stuffRoutes = require('./routes/stuff');
 
-const { DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, CLUSTER_ADDRESS } = process.env;
+const { DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, CLUSTER_ADDRESS } =
+  process.env;
 
 mongoose
   .connect(
@@ -32,7 +33,7 @@ app.use((req, res, next) => {
 });
 
 // Global middleware as well.
-// Handle requests with application/json Content-Type and set req.body
+// Handle requests with application/json Content-Type and set req.body
 app.use(express.json());
 
 app.use('/api/stuff', stuffRoutes);
