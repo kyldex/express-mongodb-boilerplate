@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const stuffRoutes = require('./routes/stuff');
+const userRoutes = require('./routes/user');
 
 const { DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, CLUSTER_ADDRESS } =
   process.env;
@@ -37,5 +38,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.use('/api/stuff', stuffRoutes);
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
