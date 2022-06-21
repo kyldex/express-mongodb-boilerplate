@@ -1,0 +1,1 @@
+Node JS Express server boilerplate with MongoDB.
