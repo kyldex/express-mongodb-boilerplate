@@ -9,5 +9,5 @@
     "ecmaVersion": "latest"
   },
   "plugins": ["prettier"],
-  "rules": {}
+  "rules": { "prettier/prettier": "error" }
 }
