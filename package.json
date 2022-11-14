@@ -2,8 +2,9 @@
   "name": "express-mongodb-boilerplate",
   "version": "0.1.0",
   "description": "Node JS Express MongoDB backend boilerplate",
-  "main": "server.js",
+  "main": "src/index.ts",
   "scripts": {
+    "tsc": "tsc",
     "start": "nodemon server.js"
   },
   "author": "Raphael Giagnorio",
@@ -15,7 +16,8 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.16",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "typescript": "^4.8.4"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
