@@ -1,17 +1,17 @@
-const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv').config();
+import express from 'express';
+import mongoose from 'mongoose';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-const stuffRoutes = require('./routes/stuff');
-const userRoutes = require('./routes/user');
+import stuffRoutes from './routes/stuff';
+import userRoutes from './routes/user';
 
 const { DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, CLUSTER_ADDRESS } =
   process.env;
 
 mongoose
   .connect(
-    `mongodb+srv://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${CLUSTER_ADDRESS}/${DATABASE_NAME}?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    `mongodb+srv://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${CLUSTER_ADDRESS}/${DATABASE_NAME}?retryWrites=true&w=majority`
   )
   .then(() => console.log('Connected to MongoDB'))
   .catch(() => console.log('Connection to MongoDB failed'));
@@ -40,4 +40,4 @@ app.use(express.json());
 app.use('/api/stuff', stuffRoutes);
 app.use('/api/auth', userRoutes);
 
-module.exports = app;
+export default app;

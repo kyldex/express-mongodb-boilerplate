@@ -1,7 +1,12 @@
-const http = require('http');
-const app = require('./app');
+import http from 'http';
+import app from './app';
 
-const normalizePort = (val) => {
+interface ErrorHandlerArg extends Error {
+  code: string;
+  syscall: string;
+}
+
+const normalizePort = (val: string) => {
   const port = parseInt(val, 10);
 
   if (Number.isNaN(port)) {
@@ -18,7 +23,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-const errorHandler = (error) => {
+const errorHandler = (error: ErrorHandlerArg) => {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -42,7 +47,8 @@ const errorHandler = (error) => {
 server.on('error', errorHandler);
 server.on('listening', () => {
   const address = server.address();
-  const bind = typeof address === 'string' ? `pipe ${address}` : `port: ${port}`;
+  const bind =
+    typeof address === 'string' ? `pipe ${address}` : `port: ${port}`;
   console.log(`Listening on ${bind}`);
 });
 

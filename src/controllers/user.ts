@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import { Request, Response } from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-const User = require('../models/User');
+import User from '../models/User';
 
-exports.signup = (req, res) => {
+export const signup = (req: Request, res: Response) => {
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -20,7 +21,7 @@ exports.signup = (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-exports.login = (req, res) => {
+export const login = (req: Request, res: Response) => {
   User.findOne({ email: req.body.email })
     // eslint-disable-next-line consistent-return
     .then((user) => {

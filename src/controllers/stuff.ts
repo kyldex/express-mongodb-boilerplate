@@ -1,6 +1,9 @@
-const Thing = require('../models/Thing');
+import { Request, Response } from 'express';
 
-exports.createThing = (req, res) => {
+import Thing from '../models/Thing';
+import RequestWithAuth from '../types/RequestWithAuth';
+
+export const createThing = (req: Request, res: Response) => {
   const thing = new Thing({
     ...req.body
   });
@@ -10,13 +13,16 @@ exports.createThing = (req, res) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.modifyThing = (req, res) => {
+export const modifyThing = (req: RequestWithAuth, res: Response) => {
   Thing.findOne({ _id: req.params.id })
     .then((thing) => {
       if (!thing) {
         return res.status(404).json({
           error: new Error('Thing not found')
         });
+      }
+      if (!req.auth) {
+        return res.status(500).json({ error: 'userId is missing' });
       }
       if (thing.userId !== req.auth.userId) {
         return res.status(400).json({
@@ -33,13 +39,16 @@ exports.modifyThing = (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-exports.deleteThing = (req, res) => {
+export const deleteThing = (req: RequestWithAuth, res: Response) => {
   Thing.findOne({ _id: req.params.id })
     .then((thing) => {
       if (!thing) {
         return res.status(404).json({
           error: new Error('Thing not found')
         });
+      }
+      if (!req.auth) {
+        return res.status(500).json({ error: 'userId is missing' });
       }
       if (thing.userId !== req.auth.userId) {
         return res.status(400).json({
@@ -53,13 +62,13 @@ exports.deleteThing = (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-exports.getOneThing = (req, res) => {
+export const getOneThing = (req: Request, res: Response) => {
   Thing.findOne({ _id: req.params.id })
     .then((thing) => res.status(200).json(thing))
     .catch((error) => res.status(404).json({ error }));
 };
 
-exports.getAllThings = (req, res) => {
+export const getAllThings = (req: Request, res: Response) => {
   Thing.find()
     .then((things) => res.status(200).json(things))
     .catch((error) => res.status(400).json({ error }));
