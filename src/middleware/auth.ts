@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 import RequestWithAuth from '../types/RequestWithAuth';
@@ -20,9 +20,11 @@ export default (req: RequestWithAuth, res: Response, next: NextFunction) => {
       throw new Error('Invalid user ID');
     }
     next();
-  } catch (e) {
-    res.status(401).json({
-      error: `${e.name} : ${e.message}`
-    });
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      res.status(401).json({
+        error: `${e.name} : ${e.message}`
+      });
+    }
   }
 };

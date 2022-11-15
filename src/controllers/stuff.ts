@@ -21,6 +21,9 @@ export const modifyThing = (req: RequestWithAuth, res: Response) => {
           error: new Error('Thing not found')
         });
       }
+      if (!req.auth) {
+        return res.status(500).json({ error: 'userId is missing' });
+      }
       if (thing.userId !== req.auth.userId) {
         return res.status(400).json({
           error: new Error('Unauthorized request')
@@ -43,6 +46,9 @@ export const deleteThing = (req: RequestWithAuth, res: Response) => {
         return res.status(404).json({
           error: new Error('Thing not found')
         });
+      }
+      if (!req.auth) {
+        return res.status(500).json({ error: 'userId is missing' });
       }
       if (thing.userId !== req.auth.userId) {
         return res.status(400).json({
